@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Muhammad Shaheer Imran</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Semantic CSS for bio-card */
+        bio-card {
+            display: block;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        bio-card h3 {
+            font-size: 1.5em;
+        }
+
+        bio-card p {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- <section>
+            <h2>About Me</h2>
+            <bio-card>
+                <h3>Muhammad Shaheer Imran</h3>
+                <p>Bioinformatics undergraduate at UC San Diego, minoring in Linguistics and Computer Science.</p>
+            </bio-card>
+        </section> -->
+        <section>
+            <h2>About Me</h2>
+            <bio-card>
+                <picture>
+                    <!-- <source srcset="images/about-me.webp" type="image/webp"> -->
+                    <source srcset="images/about-me.jpg" type="image/jpeg">
+                    <img src="images/about-me.jpg" alt="A picture of Muhammad Shaheer Imran at a conference" width="300" height="200" loading="lazy">
+                </picture>
+                <h3>Muhammad Shaheer Imran</h3>
+                <p>Bioinformatics undergraduate at UC San Diego, minoring in Linguistics and Computer Science.</p>
+            </bio-card>
+        </section>
+        
+
+        <section>
+            <h2>Education</h2>
+            <p>University of California, San Diego (Sep 2021 – June 2025)</p>
+            <p>Major: Biology (Bioinformatics)</p>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            <ul>
+                <li>Data Team Intern, Storyline Health</li>
+                <li>Member, ACM @ UCSD</li>
+                <li>Member, University Bioinformatics Club</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Muhammad Shaheer Imran</p>
+    </footer>
+</body>
+</html>
