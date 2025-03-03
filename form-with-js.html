@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Contact Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .warning {
+            color: orange;
+        }
+        .countdown {
+            font-size: 0.9rem;
+        }
+        .flash {
+            animation: flash 0.3s ease-in-out;
+        }
+        @keyframes flash {
+            0% { background-color: red; }
+            100% { background-color: white; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contact</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Enhanced Contact Form</h2>
+            <form id="contactForm" class="contact-form" action="https://httpbin.org/post" method="POST" novalidate>
+    
+                <label for="name">Name: <span>*</span></label>
+                <input type="text" id="name" name="name" required minlength="2" maxlength="50" pattern="[a-zA-Z\s]+" placeholder="Enter your name">
+                <span class="error" id="name-error"></span>
+
+                <label for="email">Email: <span>*</span></label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <span class="error" id="email-error"></span>
+
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments" minlength="10" maxlength="300" pattern="^[a-zA-Z0-9 .,!?'-]+$" placeholder="Your message here"></textarea>
+                <span class="error" id="comments-error"></span>
+                <div class="countdown" id="char-count">300 characters remaining</div>
+
+                <input type="hidden" name="form-errors" id="form-errors">
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Muhammad Shaheer Imran</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("contactForm");
+            const nameInput = document.getElementById("name");
+            const emailInput = document.getElementById("email");
+            const commentsInput = document.getElementById("comments");
+            const nameError = document.getElementById("name-error");
+            const emailError = document.getElementById("email-error");
+            const commentsError = document.getElementById("comments-error");
+            const charCount = document.getElementById("char-count");
+            const formErrors = [];
+    
+            
+            form.setAttribute("novalidate", "");
+    
+            function showError(input, message, errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = "block";
+                input.classList.add("flash");
+                input.style.border = "2px solid red"; 
+                setTimeout(() => input.classList.remove("flash"), 300);
+                formErrors.push({ field: input.name, message: message });
+            }
+    
+            function validateInput(input, errorElement, pattern = null) {
+                input.setCustomValidity(""); 
+    
+                if (pattern && !pattern.test(input.value)) {
+                    showError(input, "Invalid format", errorElement);
+                    return false;
+                }
+                if (input.value.trim() === "") {
+                    showError(input, "This field is required", errorElement);
+                    return false;
+                }
+                if (input === commentsInput && input.value.length > 300) {
+                    showError(input, "Exceeded max character limit", errorElement);
+                    return false;
+                }
+    
+                errorElement.style.display = "none";
+                input.style.border = "1px solid green"; 
+                return true;
+            }
+    
+        
+            commentsInput.addEventListener("input", function () {
+                let remaining = 300 - commentsInput.value.length;
+                charCount.textContent = `${remaining} characters remaining`;
+    
+                if (remaining <= 50 && remaining > 0) {
+                    charCount.classList.add("warning");
+                } else if (remaining <= 0) {
+                    charCount.classList.add("error");
+                    charCount.textContent = "Character limit exceeded!";
+                    showError(commentsInput, "You have exceeded the character limit!", commentsError);
+                } else {
+                    charCount.classList.remove("warning", "error");
+                    commentsError.style.display = "none";
+                }
+            });
+    
+           
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); 
+    
+                formErrors.length = 0; 
+    
+                let valid = true;
+                valid &= validateInput(nameInput, nameError, /^[a-zA-Z\s]+$/);
+                valid &= validateInput(emailInput, emailError, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+                valid &= validateInput(commentsInput, commentsError);
+    
+                document.getElementById("form-errors").value = JSON.stringify(formErrors);
+                
+                const formData = new FormData(form);
+                fetch("https://httpbin.org/post", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Form submitted to httpbin:", data);
+                })
+                .catch(error => console.error("Error submitting form:", error));
+            });
+        });
+    </script>
+    
+    <script src="theme.js"></script>
+
+</body>
+</html>
