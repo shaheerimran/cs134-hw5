@@ -64,22 +64,25 @@ function displayProjects(projects) {
 }
 
 function loadLocalProjects() {
-    let projects = loadFromLocalStorage();
+    const sampleProjects = [
+        {
+            title: "Sample Project",
+            image: "images/notes.jpg",
+            alt: "Placeholder Notes Image",
+            description: "This is a sample project added from local storage.",
+            link: "https://example.com"
+        },
+        {
+            title: "Sample Project 2",
+            image: "images/notes.jpg",
+            alt: "Placeholder Notes Image",
+            description: "This is another sample project added from local storage.",
+            link: "https://example.com"
+        }
+    ];
 
-    if (projects.length === 0) {
-        projects = [
-            {
-                title: "Sample Project",
-                image: "https://via.placeholder.com/150",
-                alt: "Placeholder Image",
-                description: "This is a sample project added from local storage.",
-                link: "https://example.com"
-            }
-        ];
-        saveToLocalStorage(projects); 
-    }
-
-    displayProjects(projects);
+    saveToLocalStorage(sampleProjects); 
+    displayProjects(sampleProjects);
 }
 
 async function loadRemoteProjects() {
@@ -88,7 +91,7 @@ async function loadRemoteProjects() {
         if (!response.ok) throw new Error("Failed to fetch remote projects");
 
         const projects = await response.json();
-        saveToLocalStorage(projects); 
+        saveToLocalStorage(projects);  
         displayProjects(projects);
     } catch (error) {
         console.error("Error loading remote projects:", error);
