@@ -1,0 +1,19 @@
+{
+    "projects": [
+            {
+                "title": "To Do List",
+                "image": "images/task.jpg",
+                "alt": "To Do List Image",
+                "description": "A simple to do list app",
+                "link": "https://github.com/shaheerimran/cse134-hw4"
+            },
+            {
+                "title": "Calendar APP",
+                "image": "images/calendar.jpg",
+                "alt": "Calendar App Image",
+                "description": "A simple calendar web app.",
+                "link": "https://github.com/shaheerimran/cse134-hw1"
+            }
+        ]
+        
+}
